@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Katalog - Alat & Aksesoris Jahit</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f5;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Hide scrollbar for horizontal scrolling but keep functionality */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Shopee-like primary color */
+        .bg-oren { background-color: #ee4d2d; }
+        .text-oren { color: #ee4d2d; }
+        .border-oren { border-color: #ee4d2d; }
+        
+        /* Line clamp for product descriptions */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;  
+            overflow: hidden;
+        }
+
+        /* Toast animation */
+        @keyframes slideUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .toast-enter {
+            animation: slideUp 0.3s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="pb-16">
+
+    <!-- Header App Bar -->
+    <header class="bg-oren text-white sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-3 py-3 lg:px-8">
+            <div class="flex items-center justify-between gap-3 md:gap-6">
+                <!-- Logo -->
+                <a href="#" class="hidden md:flex items-center gap-2 text-2xl font-bold">
+                    <i class="fa-solid fa-scissors"></i>
+                    <span>Katalog</span>
+                </a>
+
+                <!-- Search Bar -->
+                <div class="flex-1 relative">
+                    <input type="text" placeholder="Cari Benang, Jarum, Mesin Jahit..." 
+                           class="w-full bg-white text-gray-800 text-sm md:text-base rounded-sm py-2 px-3 pl-4 focus:outline-none focus:ring-2 focus:ring-orange-300 transition-all">
+                    <button class="absolute right-1 top-1 bottom-1 bg-oren text-white px-4 rounded-sm flex items-center justify-center hover:bg-orange-600 transition">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
+
+                <!-- Icons Right / Store Logo -->
+                <div class="flex items-center gap-4">
+                    <a href="#" class="relative hover:opacity-80 transition group flex flex-col items-center">
+                        <div class="w-9 h-9 md:w-11 md:h-11 rounded-full overflow-hidden border-2 border-white shadow-sm bg-white flex items-center justify-center">
+                            <img src="https://i.imgur.com/0hleZIY.jpeg" alt="Logo Griya Busana" class="w-full h-full object-cover">
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-2 lg:px-8 py-4">
+        
+        <!-- Banners Section -->
+        <section class="mb-4">
+            <div class="w-full h-32 md:h-64 bg-gray-300 rounded-lg overflow-hidden relative shadow-sm">
+                <!-- Shop Name Badge -->
+                <div class="absolute top-2 left-2 md:top-4 md:left-4 z-10 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded shadow text-oren font-bold text-sm md:text-base flex items-center gap-2">
+                    <i class="fa-solid fa-store"></i> Griya Busana
+                </div>
+                <!-- Banner Image Promo -->
+                <img src="https://i.imgur.com/3rtW86m.png" alt="Banner Promo Alat Jahit" class="w-full h-full object-cover">
+            </div>
+        </section>
+
+        <!-- Categories Horizontal Scroll -->
+        <section class="bg-white rounded-lg shadow-sm p-3 mb-4">
+            <h2 class="text-sm font-bold text-gray-500 mb-3 uppercase tracking-wider">Kategori Pilihan</h2>
+            <div class="flex overflow-x-auto no-scrollbar gap-4 pb-2">
+                
+                <div onclick="filterByCategory('Kancing')" class="flex flex-col items-center min-w-[70px] gap-2 cursor-pointer hover:-translate-y-1 transition-transform">
+                    <div class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-500 text-xl"><i class="fa-solid fa-gear"></i></div>
+                    <span class="text-xs text-center text-gray-700">Kancing</span>
+                </div>
+                <div onclick="filterByCategory('Benang')" class="flex flex-col items-center min-w-[70px] gap-2 cursor-pointer hover:-translate-y-1 transition-transform">
+                    <div class="w-12 h-12 bg-pink-100 rounded-2xl flex items-center justify-center text-pink-500 text-xl"><i class="fa-solid fa-palette"></i></div>
+                    <span class="text-xs text-center text-gray-700">Benang</span>
+                </div>
+                <div onclick="filterByCategory('Gunting')" class="flex flex-col items-center min-w-[70px] gap-2 cursor-pointer hover:-translate-y-1 transition-transform">
+                    <div class="w-12 h-12 bg-orange-100 rounded-2xl flex items-center justify-center text-orange-500 text-xl"><i class="fa-solid fa-scissors"></i></div>
+                    <span class="text-xs text-center text-gray-700">Gunting</span>
+                </div>
+                <div onclick="filterByCategory('Alat Ukur')" class="flex flex-col items-center min-w-[70px] gap-2 cursor-pointer hover:-translate-y-1 transition-transform">
+                    <div class="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center text-green-500 text-xl"><i class="fa-solid fa-ruler"></i></div>
+                    <span class="text-xs text-center text-gray-700">Alat Ukur</span>
+                </div>
+                <div onclick="filterByCategory('Jarum')" class="flex flex-col items-center min-w-[70px] gap-2 cursor-pointer hover:-translate-y-1 transition-transform">
+                    <div class="w-12 h-12 bg-purple-100 rounded-2xl flex items-center justify-center text-purple-500 text-xl"><i class="fa-solid fa-pen"></i></div>
+                    <span class="text-xs text-center text-gray-700">Jarum</span>
+                </div>
+                <div onclick="filterByCategory('Kain')" class="flex flex-col items-center min-w-[70px] gap-2 cursor-pointer hover:-translate-y-1 transition-transform">
+                    <div class="w-12 h-12 bg-red-100 rounded-2xl flex items-center justify-center text-red-500 text-xl"><i class="fa-solid fa-layer-group"></i></div>
+                    <span class="text-xs text-center text-gray-700">Kain</span>
+                </div>
+                <div onclick="filterByCategory('Resleting')" class="flex flex-col items-center min-w-[70px] gap-2 cursor-pointer hover:-translate-y-1 transition-transform">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-2xl flex items-center justify-center text-indigo-500 text-xl"><i class="fa-solid fa-up-down"></i></div>
+                    <span class="text-xs text-center text-gray-700">Resleting</span>
+                </div>
+                 <div onclick="filterByCategory('Aksesoris')" class="flex flex-col items-center min-w-[70px] gap-2 cursor-pointer hover:-translate-y-1 transition-transform">
+                    <div class="w-12 h-12 bg-teal-100 rounded-2xl flex items-center justify-center text-teal-500 text-xl"><i class="fa-solid fa-box-open"></i></div>
+                    <span class="text-xs text-center text-gray-700">Aksesoris</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Grid Section -->
+        <section>
+            <div class="flex items-center justify-between bg-white p-3 border-b-4 border-oren rounded-t-lg">
+                <h2 id="category-title" class="text-oren font-bold text-lg uppercase">Rekomendasi Alat Jahit</h2>
+                <a href="javascript:void(0)" onclick="filterByCategory('Semua')" class="text-xs text-gray-500 hover:text-oren">Lihat Semua ></a>
+            </div>
+            
+            <!-- Grid Container: 2 cols on mobile, 3 tablet, 5-6 desktop -->
+            <div id="product-container" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-2 mt-2">
+                <!-- Products will be injected here by JavaScript -->
+            </div>
+        </section>
+        
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="fixed bottom-0 w-full bg-white border-t border-gray-200 flex justify-around items-center h-16 z-50 text-xs text-gray-500 shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
+        <a href="#" class="flex flex-col items-center gap-1 w-full py-2 text-oren">
+            <i class="fa-solid fa-house text-lg"></i>
+            <span>Beranda</span>
+        </a>
+        <button onclick="toggleLocationModal()" class="flex flex-col items-center gap-1 w-full py-2 hover:text-oren transition">
+            <i class="fa-solid fa-location-dot text-lg"></i>
+            <span>Lokasi</span>
+        </button>
+        <button onclick="toggleNotificationModal()" class="flex flex-col items-center gap-1 w-full py-2 hover:text-oren transition relative">
+            <i class="fa-solid fa-bell text-lg"></i>
+            <span>Notifikasi</span>
+            <!-- Badge Notifikasi (Awalnya disembunyikan) -->
+            <span id="notif-badge" class="absolute top-1 right-3 bg-oren text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full hidden min-w-[16px] text-center">0</span>
+        </button>
+    </nav>
+
+    <!-- Location Modal -->
+    <div id="location-modal" class="fixed inset-0 z-[70] hidden items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300 opacity-0">
+        <div class="bg-white rounded-lg w-[90%] max-w-md p-5 transform scale-95 transition-transform duration-300" id="location-modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold text-gray-800">Lokasi Toko</h3>
+                <button onclick="toggleLocationModal()" class="text-gray-400 hover:text-red-500 transition text-2xl leading-none">&times;</button>
+            </div>
+            
+            <div class="w-full h-48 bg-gray-200 rounded-md mb-4 overflow-hidden relative">
+                <!-- TEMPAT MENGINPUT MAPS (1): Ganti atribut src="" di bawah dengan link 'Embed a map' dari Google Maps toko Anda -->
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63286.95669626568!2d111.8278207486328!3d-7.527463599999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e78350044971997%3A0xd4f12045eadf49fa!2sTOK%20ALAT%20JAHIT%20LENGKAP%20%22GRIYA%20BUSANA%22!5e0!3m2!1sid!2sid!4v1782479629993!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+            
+            <p class="text-sm text-gray-600 mb-4 text-center">
+                <i class="fa-solid fa-map-pin text-oren mr-1"></i> Tulis Alamat Lengkap Toko Anda Disini, RT/RW, Kec., Kota
+            </p>
+            
+            <!-- TEMPAT MENGINPUT MAPS (2): Ganti atribut href="" di bawah dengan link Google Maps toko Anda -->
+            <a href="https://maps.app.goo.gl/7c36zSwGRRyPHEib9" target="_blank" class="w-full bg-oren text-white py-2.5 rounded-md font-medium flex items-center justify-center gap-2 hover:bg-orange-600 transition">
+                <i class="fa-solid fa-location-arrow"></i> Buka di Google Maps
+            </a>
+        </div>
+    </div>
+
+    <!-- Notification Modal -->
+    <div id="notification-modal" class="fixed inset-0 z-[70] hidden items-end md:items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300 opacity-0">
+        <div class="bg-white w-full md:w-[90%] md:max-w-md h-[70vh] md:h-auto md:max-h-[80vh] rounded-t-2xl md:rounded-lg p-5 transform translate-y-full md:translate-y-0 md:scale-95 transition-transform duration-300 flex flex-col" id="notification-modal-content">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-100">
+                <h3 class="text-lg font-bold text-gray-800">Notifikasi</h3>
+                <button onclick="toggleNotificationModal()" class="text-gray-400 hover:text-red-500 transition text-2xl leading-none">&times;</button>
+            </div>
+            
+            <div id="notification-list" class="flex-1 overflow-y-auto flex flex-col gap-0 no-scrollbar">
+                <!-- List Notifikasi akan dimunculkan disini via JS -->
+                <div class="text-center text-gray-400 py-10 text-sm flex flex-col items-center justify-center h-full">
+                    <i class="fa-regular fa-bell-slash text-4xl mb-2 text-gray-300"></i>
+                    Belum ada notifikasi baru
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Toast Container -->
+    <div id="toast-container" class="fixed top-20 left-1/2 transform -translate-x-1/2 z-[60] flex flex-col gap-2 pointer-events-none w-[90%] max-w-sm"></div>
+
+    <script>
+        // Formatter for Rupiah
+        const formatRupiah = (number) => {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            }).format(number);
+        };
+
+        // Custom Toast Notification Function (Replaces alert)
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            const bgColor = type === 'success' ? 'bg-green-600' : 'bg-red-500';
+            const icon = type === 'success' ? 'fa-check-circle' : 'fa-circle-exclamation';
+
+            toast.className = `${bgColor} text-white px-4 py-3 rounded shadow-lg flex items-center gap-3 toast-enter pointer-events-auto`;
+            toast.innerHTML = `
+                <i class="fa-solid ${icon} text-lg"></i>
+                <span class="text-sm font-medium flex-1">${message}</span>
+            `;
+
+            container.appendChild(toast);
+
+            // Remove after 3 seconds
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-20px)';
+                toast.style.transition = 'all 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Mock Product Data - Sewing Niche
+        let products = [
+            {
+                id: 1,
+                name: "Jarum singer per bungkus (isi 10pc). Tersedia ukuran 11 13 14 16 18 21. Harga per pack",
+                category: "Jarum",
+                originalPrice: 12750,
+                price: 12000,
+                discount: "",
+                stock: 25,
+                sold: 8,
+                location: "Jakarta Barat",
+                image: "https://i.imgur.com/6uNQkJQ.png"
+            },
+            {
+                id: 2,
+                name: "Benang jahit yamalon 500 yeard.",
+                category: "Benang",
+                originalPrice: 3000,
+                price: 3000,
+                discount: "",
+                stock: 150,
+                sold: 22,
+                location: "Rejoso",
+                image: "https://i.imgur.com/IJsOfvf.jpeg"
+            },
+            {
+                id: 3,
+                name: "Kancing Jamur Silver Mutiara 11/13 mm. Harga di atas per lusin. Bahan plastik berkualitas tinggi berlapis warna silver dan mutiara yg elegan",
+                category: "Kancing",
+                originalPrice: 5000,
+                price: 5000,
+                discount: "",
+                stock: 40,
+                sold: 10,
+                location: "Bandung",
+                image: "https://i.imgur.com/IZL2eZX.png"
+            },
+            {
+                id: 4,
+                name: "Pita Ukur / Meteran Baju Lentur 150cm / 60 inch Kualitas Import",
+                category: "Alat Ukur",
+                originalPrice: 19750,
+                price: 19000,
+                discount: "",
+                stock: 0,
+                sold: 12,
+                location: "Kota Tangerang",
+                image: "https://i.imgur.com/QqJWdMG.jpeg"
+            },
+            {
+                id: 5,
+                name: "Resleting Jepang'",
+                category: "Resleting",
+                originalPrice: 3750,
+                price: 3500,
+                discount: "",
+                stock: 50, // Out of stock example
+                sold: 10,
+                location: "Jakarta Utara",
+                image: "https://i.imgur.com/VNKpCEH.png"
+            },
+            {
+                id: 6,
+                name: "Resleting Jepang Merk TTM 25 cm",
+                category: "Resleting",
+                originalPrice: 3000,
+                price: 2000,
+                discount: "",
+                stock: 30, // Low stock example
+                sold: 12,
+                location: "Jakarta Pusat",
+                image: "https://i.imgur.com/5uOzAoq.jpeg"
+            },
+            {
+                id: 7,
+                name: "Retsleting CFC-39/YKK 6 Inch (15.5 cm)",
+                category: "Resleting",
+                originalPrice: 2250,
+                price: 2000,
+                discount: "",
+                stock: 50,
+                sold: 8,
+                location: "Bandung",
+                image: "https://i.imgur.com/xMzLqps.jpeg"
+            },
+            {
+                id: 8,
+                name: "Retsleting CFC-39/YKK 7 Inch (17.5cm)",
+                category: "Resleting",
+                originalPrice: 3000,
+                price: 2500,
+                discount: "",
+                stock: 88,
+                sold: 10,
+                location: "Semarang",
+                image: "https://i.imgur.com/E7gqdhr.jpeg"
+            },
+            {
+                id: 9,
+                name: "Resleting YKK MGC-49 5 Inch Gigi Metal Warna Emas",
+                category: "Resleting",
+                originalPrice: 5300,
+                price: 5000,
+                discount: "",
+                stock: 88,
+                sold: 14,
+                location: "Semarang",
+                image: "https://i.imgur.com/7E8v91b.png"
+            },
+            {
+                id: 10,
+                name: "Resleting YKK SLFC-32 Ukuran 6 Inch (15 cm)",
+                category: "Resleting",
+                originalPrice: 2000,
+                price: 1500,
+                discount: "",
+                stock: 50,
+                sold: 15,
+                location: "Semarang",
+                image: "https://i.imgur.com/xfyVQnj.jpeg"
+            },
+            {
+                id: 11,
+                name: "Benang Obras Angsa Dunia",
+                category: "Benang",
+                originalPrice: 23150,
+                price: 22000,
+                discount: "",
+                stock: 10,
+                sold: 5,
+                location: "Semarang",
+                image: "https://i.imgur.com/u64lam0.jpeg"
+            },
+            {
+                id: 12,
+                name: "Benang Jahit Ultra 160 Yards 1 Lusin",
+                category: "Benang",
+                originalPrice: 14500,
+                price: 14000,
+                discount: "",
+                stock: 10,
+                sold: 4,
+                location: "",
+                image: "https://i.imgur.com/JOWEpy0.png"
+            },
+            {
+                id: 13,
+                name: "Karet Elastik Bell/Elastik Bell 1 1/4 Inch",
+                category: "Aksesoris",
+                originalPrice: 4200,
+                price: 4000,
+                discount: "",
+                stock: 10,
+                sold: 3,
+                location: "Semarang",
+                image: "https://i.imgur.com/OS2CYDf.png"
+            },
+            {
+                id: 14,
+                name: "Gunting Potong Bahan Kain High Quality",
+                category: "Gunting",
+                originalPrice: 120500,
+                price: 118000,
+                discount: "",
+                stock: 0,
+                sold: 2,
+                location: "Semarang",
+                image: "https://i.imgur.com/8cntVhu.png"
+            }
+        ];
+
+        // State untuk Notifikasi
+        let notifications = [];
+        let unreadCount = 0;
+
+        function renderProducts(productList) {
+            const container = document.getElementById('product-container');
+            container.innerHTML = ''; 
+
+            if (productList.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full flex flex-col items-center justify-center py-12 text-gray-400">
+                        <i class="fa-solid fa-box-open text-4xl mb-3 text-gray-200"></i>
+                        <p class="text-sm">Produk di kategori ini belum tersedia.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            productList.forEach(product => {
+                // Stock logic & Button State
+                let stockStatus = '';
+                let btnState = '';
+                if (product.stock === 0) {
+                    stockStatus = `<span class="bg-gray-200 text-gray-500 text-[10px] px-1.5 py-0.5 rounded font-bold">HABIS</span>`;
+                    btnState = 'disabled class="mt-2 w-full bg-gray-300 text-white py-1.5 rounded text-sm cursor-not-allowed flex items-center justify-center"';
+                } else if (product.stock < 10) {
+                    stockStatus = `<span class="bg-red-100 text-red-600 text-[10px] px-1.5 py-0.5 rounded font-bold">Sisa ${product.stock}</span>`;
+                    btnState = 'class="mt-2 w-full bg-green-500 hover:bg-green-600 text-white py-1.5 rounded text-sm transition flex items-center justify-center active:scale-95"';
+                } else {
+                    stockStatus = `<span class="text-gray-500 text-xs">Stok: ${product.stock}</span>`;
+                    btnState = 'class="mt-2 w-full bg-green-500 hover:bg-green-600 text-white py-1.5 rounded text-sm transition flex items-center justify-center active:scale-95"';
+                }
+
+                // Format sold count (e.g. 1500 -> 1.5RB)
+                let soldText = product.sold >= 1000 ? (product.sold / 1000).toFixed(1).replace('.0', '') + 'RB' : product.sold;
+
+                const cardHTML = `
+                    <div class="bg-white rounded hover:shadow-lg transition-shadow duration-300 border border-gray-100 flex flex-col h-full relative group">
+                        
+                        <!-- Discount Badge -->
+                        ${product.discount ? `
+                        <div class="absolute top-0 right-0 z-10 bg-[#fce03b] text-[#ee4d2d] text-[11px] font-bold px-1.5 py-0.5 flex flex-col items-center">
+                            <span>${product.discount}</span>
+                            <span class="uppercase text-[9px]">Off</span>
+                        </div>
+                        ` : ''}
+
+                        <!-- Category Badge -->
+                        <div class="absolute top-1 left-1 z-10 bg-black/50 text-white text-[9px] px-1.5 py-0.5 rounded backdrop-blur-sm">
+                            ${product.category}
+                        </div>
+
+                        <!-- Product Image -->
+                        <div class="relative w-full pt-[100%] overflow-hidden bg-gray-50 rounded-t">
+                            <img src="${product.image}" alt="${product.name}" class="absolute top-0 left-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        </div>
+
+                        <!-- Product Info -->
+                        <div class="p-2 flex-1 flex flex-col justify-between">
+                            <div>
+                                <!-- Description / Name -->
+                                <h3 class="text-sm text-gray-800 line-clamp-2 leading-tight min-h-[36px] font-medium" title="${product.name}">
+                                    ${product.name}
+                                </h3>
+                                
+                                <!-- Original Price (Strikethrough) -->
+                                ${product.originalPrice > product.price ? `
+                                <div class="text-[10px] text-gray-400 line-through mt-1">
+                                    ${formatRupiah(product.originalPrice)}
+                                </div>
+                                ` : '<div class="h-4 mt-1"></div>'}
+                                
+                                <!-- Main Price -->
+                                <div class="text-oren font-bold text-base mt-0.5">
+                                    ${formatRupiah(product.price)}
+                                </div>
+                            </div>
+
+                            <div class="mt-2">
+                                <!-- Sold Count -->
+                                <div class="flex items-center justify-end text-[10px] text-gray-500 mb-2">
+                                    <span class="whitespace-nowrap">${soldText} Terjual</span>
+                                </div>
+
+                                <!-- Stock Status & Action -->
+                                <div class="flex items-center justify-between mb-2">
+                                    ${stockStatus}
+                                </div>
+                                
+                                <button ${btnState} onclick="orderViaWA(${product.id}, ${product.stock})">
+                                    <i class="fa-brands fa-whatsapp text-lg mr-1.5"></i> Pesan WA
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += cardHTML;
+            });
+        }
+
+        // WhatsApp Order Logic
+        function orderViaWA(productId, stock) {
+            if (stock === 0) {
+                showToast('Maaf, stok produk ini sedang kosong.', 'error');
+                return;
+            }
+            
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                // Nomor WhatsApp tujuan (ganti dengan nomor yang benar, gunakan kode negara 62)
+                const phoneNumber = "6281615201931"; 
+                
+                // Format pesan WA
+                const textMessage = `Halo, saya tertarik untuk memesan produk ini:%0A%0A*${product.name}*%0AHarga: ${formatRupiah(product.price)}%0A%0AApakah stoknya masih tersedia?`;
+                
+                // Buka tab WhatsApp
+                window.open(`https://wa.me/${phoneNumber}?text=${textMessage}`, '_blank');
+            }
+        }
+
+        // --- Fitur Notifikasi --- //
+
+        // 1. Menambah Notifikasi Baru
+        function addNotification(title, message, image) {
+            const newNotif = {
+                id: Date.now(),
+                title: title,
+                message: message,
+                image: image,
+                time: "Baru saja",
+                read: false
+            };
+            
+            // Tambahkan ke urutan teratas
+            notifications.unshift(newNotif);
+            unreadCount++;
+            
+            // Update UI Badge
+            updateNotificationBadge();
+            // Update List di dalam Modal
+            renderNotifications();
+            // Munculkan Toast
+            showToast(`Produk Baru: ${title}`, 'success');
+        }
+
+        // 2. Update Angka Badge Merah di Ikon Bawah
+        function updateNotificationBadge() {
+            const badge = document.getElementById('notif-badge');
+            if (unreadCount > 0) {
+                badge.innerText = unreadCount > 99 ? '99+' : unreadCount;
+                badge.classList.remove('hidden');
+                badge.classList.add('flex', 'items-center', 'justify-center');
+            } else {
+                badge.classList.add('hidden');
+                badge.classList.remove('flex', 'items-center', 'justify-center');
+            }
+        }
+
+        // 3. Render isi Daftar Notifikasi di Modal
+        function renderNotifications() {
+            const listContainer = document.getElementById('notification-list');
+            
+            if (notifications.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="text-center text-gray-400 py-10 text-sm flex flex-col items-center justify-center h-full">
+                        <i class="fa-regular fa-bell-slash text-4xl mb-2 text-gray-300"></i>
+                        Belum ada notifikasi baru
+                    </div>
+                `;
+                return;
+            }
+
+            listContainer.innerHTML = '';
+            notifications.forEach(notif => {
+                const notifHTML = `
+                    <div class="flex gap-3 p-3 border-b border-gray-100 hover:bg-gray-50 transition cursor-pointer ${notif.read ? 'opacity-60' : 'bg-orange-50/30'}">
+                        <div class="w-12 h-12 rounded bg-gray-200 overflow-hidden flex-shrink-0">
+                            <img src="${notif.image}" alt="notif img" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-sm font-bold text-gray-800 line-clamp-1">${notif.title}</h4>
+                            <p class="text-xs text-gray-600 line-clamp-2 mt-0.5">${notif.message}</p>
+                            <span class="text-[10px] text-gray-400 mt-1 block">${notif.time}</span>
+                        </div>
+                    </div>
+                `;
+                listContainer.innerHTML += notifHTML;
+            });
+        }
+
+        // 4. Logika Buka/Tutup Modal Notifikasi
+        function toggleNotificationModal() {
+            const modal = document.getElementById('notification-modal');
+            const content = document.getElementById('notification-modal-content');
+            
+            if (modal.classList.contains('hidden')) {
+                // Tampilkan Modal
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                    // Reset styling untuk animasi masuk (berbeda di mobile vs desktop)
+                    content.classList.remove('translate-y-full', 'md:scale-95');
+                }, 10);
+                
+                // Tandai semua dibaca saat dibuka
+                unreadCount = 0;
+                notifications.forEach(n => n.read = true);
+                updateNotificationBadge();
+                renderNotifications(); // render ulang untuk mengubah background item menjadi "sudah dibaca"
+
+            } else {
+                // Sembunyikan Modal
+                modal.classList.add('opacity-0');
+                content.classList.add('translate-y-full', 'md:scale-95');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }, 300);
+            }
+        }
+
+        // --- Fitur Filter Kategori --- //
+        function filterByCategory(category) {
+            const titleElement = document.getElementById('category-title');
+            
+            if (category === 'Semua') {
+                renderProducts(products);
+                titleElement.innerText = "Rekomendasi Alat Jahit";
+            } else {
+                const filtered = products.filter(p => p.category.toLowerCase() === category.toLowerCase());
+                renderProducts(filtered);
+                titleElement.innerText = `Kategori: ${category}`;
+            }
+        }
+
+        // --- Simulasi Menambah Produk Baru --- //
+        function simulateNewProductArrival() {
+            const newProduct = {
+                id: Date.now(),
+                name: "Jarum Jahit Tangan Sharps Original (12 Bungkus)",
+                category: "Jarum",
+                originalPrice: 12350,
+                price: 12000,
+                discount: "",
+                stock: 50,
+                sold: 0,
+                location: "Surabaya",
+                image: "https://i.imgur.com/ZHCxJxg.png"
+            };
+
+            // Tambahkan ke array produk (di posisi paling atas/depan)
+            products.unshift(newProduct);
+            
+            // Render ulang daftar produk di layar utama
+            renderProducts(products);
+            
+            // Memicu notifikasi
+            addNotification(
+                newProduct.name, 
+                `Produk baru telah ditambahkan ke katalog dengan harga ${formatRupiah(newProduct.price)}. Segera cek sekarang!`,
+                newProduct.image
+            );
+        }
+
+        // Location Modal Logic
+        function toggleLocationModal() {
+            const modal = document.getElementById('location-modal');
+            const content = document.getElementById('location-modal-content');
+            
+            if (modal.classList.contains('hidden')) {
+                // Tampilkan Modal
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                    content.classList.remove('scale-95');
+                }, 10);
+            } else {
+                // Sembunyikan Modal
+                modal.classList.add('opacity-0');
+                content.classList.add('scale-95');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }, 300);
+            }
+        }
+
+        // Initial Render
+        window.addEventListener('DOMContentLoaded', () => {
+            renderProducts(products);
+
+            // Simulasi: 5 Detik setelah web dibuka, otomatis ada produk baru ditambahkan
+            setTimeout(() => {
+                simulateNewProductArrival();
+            }, 5000);
+        });
+
+    </script>
+</body>
+</html>
